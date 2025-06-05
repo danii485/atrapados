@@ -1,4 +1,9 @@
 ball.png
 cancha.png
+default.fnt
+estadio.png
 libgdx.png
 personaje.png
+uiskin.atlas
+uiskin.json
+uiskin.png

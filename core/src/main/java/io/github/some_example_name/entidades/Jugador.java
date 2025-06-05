@@ -11,8 +11,8 @@ public class Jugador {
     private Texture textura;
     private float x, y;
     private float velocidad;
-    private static final float ANCHO = 32;
-    private static final float ALTO = 32;
+    private static final float ANCHO = 64;
+    private static final float ALTO = 64;
     private float pantallaAncho, pantallaAlto;
     private Rectangle hitbox;
 

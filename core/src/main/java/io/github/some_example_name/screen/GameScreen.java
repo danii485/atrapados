@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
+import io.github.some_example_name.Main;
 import io.github.some_example_name.entidades.BolaEnemiga;
 import io.github.some_example_name.entidades.Jugador;
 
@@ -16,6 +17,7 @@ public class GameScreen implements Screen {
     private SpriteBatch batch;
     private Texture fondo;
     private BitmapFont font;
+    private Main game;
 
     private Array<BolaEnemiga> bolas;
     private Jugador jugador;
@@ -27,6 +29,9 @@ public class GameScreen implements Screen {
     private float tiempoReinicio = 2f;
 
     private ShapeRenderer shapeRenderer;
+    public GameScreen(Main game) {
+        this.game = game;
+    }
 
     @Override
     public void show() {

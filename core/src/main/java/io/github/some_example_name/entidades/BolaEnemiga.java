@@ -9,8 +9,8 @@ public class BolaEnemiga {
     private Texture textura;
     private float x, y;
     private float velocidadX, velocidadY;
-    private static final float ANCHO = 32;
-    private static final float ALTO = 32;
+    private static final float ANCHO = 64;
+    private static final float ALTO = 64;
     private float screenWidth, screenHeight;
     private Rectangle hitbox;
 
@@ -22,8 +22,8 @@ public class BolaEnemiga {
         this.x = MathUtils.random(0, screenWidth - ANCHO);
         this.y = MathUtils.random(0, screenHeight - ALTO);
 
-        this.velocidadX = MathUtils.randomSign() * 100;
-        this.velocidadY = MathUtils.randomSign() * 100;
+        this.velocidadX = MathUtils.randomSign() * 80;
+        this.velocidadY = MathUtils.randomSign() * 80;
 
         this.hitbox = new Rectangle(x, y, ANCHO, ALTO);
     }
