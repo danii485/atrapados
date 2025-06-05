@@ -15,15 +15,16 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import io.github.some_example_name.Main;
 import io.github.some_example_name.niveles.Nivel1;
+import io.github.some_example_name.niveles.Nivel2;
 
-public class MenuScreen implements Screen {
+public class Niveles implements Screen {
     private final Main game;
     private Stage stage;
     private Skin skin;
     private Texture fondo;
     private SpriteBatch batch;
 
-    public MenuScreen(Main game) {
+    public Niveles(Main game) {
         this.game = game;
     }
 
@@ -35,42 +36,36 @@ public class MenuScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
         skin = new Skin(Gdx.files.internal("uiskin.json"));
 
-        // Botones
-        TextButton startButton = new TextButton("Start", skin);
-        TextButton levelButton = new TextButton("Level", skin);
-        TextButton exitButton = new TextButton("Exit", skin);
+        TextButton nivel1Button = new TextButton("Nivel 1", skin);
+        TextButton nivel2Button = new TextButton("Nivel 2", skin);
+        TextButton volverButton = new TextButton("Volver", skin);
 
-        // Listeners
-        startButton.addListener(new ClickListener() {
+        nivel1Button.addListener(new ClickListener() {
             @Override public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new Nivel1(game));
             }
         });
 
-        levelButton.addListener(new ClickListener() {
+        nivel2Button.addListener(new ClickListener() {
             @Override public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new Niveles(game));
+                game.setScreen(new Nivel2(game));
             }
         });
 
-        exitButton.addListener(new ClickListener() {
+        volverButton.addListener(new ClickListener() {
             @Override public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.exit();
+                game.setScreen(new MenuScreen(game));
             }
         });
 
-        // Tabla de botones
         Table table = new Table();
         table.setFillParent(true);
         stage.addActor(table);
         table.center();
 
-        float buttonWidth = 220;
-        float buttonHeight = 60;
-
-        table.add(startButton).width(buttonWidth).height(buttonHeight).pad(10).row();
-        table.add(levelButton).width(buttonWidth).height(buttonHeight).pad(10).row();
-        table.add(exitButton).width(buttonWidth).height(buttonHeight).pad(10).row();
+        table.add(nivel1Button).width(200).height(60).pad(10).row();
+        table.add(nivel2Button).width(200).height(60).pad(10).row();
+        table.add(volverButton).width(200).height(60).pad(10).row();
     }
 
     @Override
@@ -100,3 +95,4 @@ public class MenuScreen implements Screen {
         batch.dispose();
     }
 }
+

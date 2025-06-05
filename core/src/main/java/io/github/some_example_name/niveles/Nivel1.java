@@ -6,11 +6,21 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import io.github.some_example_name.entidades.BolaEnemiga;
 import io.github.some_example_name.entidades.Jugador;
 import io.github.some_example_name.Main;
+import io.github.some_example_name.screen.MenuScreen;
 
 public class Nivel1 implements Screen {
+    private Stage stage;
+    private Skin skin;
+    private TextButton menuButton;
     private Main game;
     private SpriteBatch batch;
     private Texture fondo;
@@ -19,7 +29,7 @@ public class Nivel1 implements Screen {
     private float anchoPantalla, altoPantalla;
     private boolean jugadorMuerto;
 
-    public Nivel1 (Main game) {
+    public Nivel1(Main game) {
         this.game = game;
     }
 
@@ -32,9 +42,25 @@ public class Nivel1 implements Screen {
         jugador = new Jugador(anchoPantalla, altoPantalla);
         jugadorMuerto = false;
         bolas = new Array<>();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 3; i++) {
             bolas.add(new BolaEnemiga(anchoPantalla, altoPantalla));
         }
+
+        stage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(stage);
+        skin = new Skin(Gdx.files.internal("uiskin.json"));
+
+        menuButton = new TextButton("Menu", skin);
+        menuButton.setSize(80, 40);
+        menuButton.setPosition(20, altoPantalla - 90,10);
+        menuButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new MenuScreen(game));
+            }
+        });
+
+        stage.addActor(menuButton);
     }
 
     @Override
@@ -50,7 +76,7 @@ public class Nivel1 implements Screen {
                     jugadorMuerto = true;
                 }
             }
-            if (jugador.getHitbox().y > altoPantalla - 50) {
+            if (jugador.getHitbox().y > anchoPantalla - 50) {
                 game.setScreen(new Nivel2(game));
             }
         }
@@ -63,19 +89,30 @@ public class Nivel1 implements Screen {
         jugador.renderizar(batch);
         batch.end();
 
+        stage.act(delta);
+        stage.draw();
+
         if (jugadorMuerto) {
             game.setScreen(new Nivel1(game));
         }
     }
 
-    @Override public void dispose() {
+    @Override
+    public void dispose() {
         batch.dispose();
         fondo.dispose();
         for (BolaEnemiga bola : bolas) bola.dispose();
         jugador.dispose();
+        stage.dispose();
+        skin.dispose();
     }
-    @Override public void resize(int width, int height) {}
+
+    @Override public void resize(int width, int height) {
+        stage.getViewport().update(width, height, true);
+    }
+
     @Override public void pause() {}
     @Override public void resume() {}
     @Override public void hide() {}
 }
+
