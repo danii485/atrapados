@@ -15,9 +15,10 @@ public class Jugador {
     private static final float ALTO = 58;
     private float pantallaAncho, pantallaAlto;
     private Rectangle hitbox;
+    private float prevX, prevY;
 
     public Jugador(float pantallaAncho, float pantallaAlto) {
-        this.textura = new Texture("personaje1.png");
+        this.textura = new Texture("messi.png");
         this.pantallaAncho = pantallaAncho;
         this.pantallaAlto = pantallaAlto;
         this.x = 0;
@@ -46,6 +47,16 @@ public class Jugador {
         hitbox.setPosition(x, y);
     }
 
+    public void guardarPosicionAnterior(){
+        prevX = x;
+        prevY = y;
+    }
+    public void retrocederPosicionAnterior(){
+        x = prevX;
+        y = prevY;
+        hitbox.setPosition(x,y);
+    }
+
     public void renderizar(SpriteBatch batch) {
         batch.draw(textura, x, y, ANCHO, ALTO);
     }
@@ -58,4 +69,3 @@ public class Jugador {
         textura.dispose();
     }
 }
-

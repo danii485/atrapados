@@ -2,13 +2,13 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/atrapados-master.iml" filepath="$PROJECT_DIR$/.idea/modules/atrapados-master.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/atrapados-master.core.iml" filepath="$PROJECT_DIR$/.idea/modules/core/atrapados-master.core.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/atrapados-master.core.main.iml" filepath="$PROJECT_DIR$/.idea/modules/core/atrapados-master.core.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/atrapados-master.core.test.iml" filepath="$PROJECT_DIR$/.idea/modules/core/atrapados-master.core.test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lwjgl3/atrapados-master.lwjgl3.iml" filepath="$PROJECT_DIR$/.idea/modules/lwjgl3/atrapados-master.lwjgl3.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lwjgl3/atrapados-master.lwjgl3.main.iml" filepath="$PROJECT_DIR$/.idea/modules/lwjgl3/atrapados-master.lwjgl3.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lwjgl3/atrapados-master.lwjgl3.test.iml" filepath="$PROJECT_DIR$/.idea/modules/lwjgl3/atrapados-master.lwjgl3.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/atrapadosmaster.iml" filepath="$PROJECT_DIR$/.idea/modules/atrapadosmaster.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/atrapadosmaster.core.iml" filepath="$PROJECT_DIR$/.idea/modules/core/atrapadosmaster.core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/atrapadosmaster.core.main.iml" filepath="$PROJECT_DIR$/.idea/modules/core/atrapadosmaster.core.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/atrapadosmaster.core.test.iml" filepath="$PROJECT_DIR$/.idea/modules/core/atrapadosmaster.core.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lwjgl3/atrapadosmaster.lwjgl3.iml" filepath="$PROJECT_DIR$/.idea/modules/lwjgl3/atrapadosmaster.lwjgl3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lwjgl3/atrapadosmaster.lwjgl3.main.iml" filepath="$PROJECT_DIR$/.idea/modules/lwjgl3/atrapadosmaster.lwjgl3.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lwjgl3/atrapadosmaster.lwjgl3.test.iml" filepath="$PROJECT_DIR$/.idea/modules/lwjgl3/atrapadosmaster.lwjgl3.test.iml" />
     </modules>
   </component>
 </project>

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id=":lwjgl3:test" external.linked.project.path="$MODULE_DIR$/../../../lwjgl3" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.group="atrapados-master" external.system.module.type="sourceSet" external.system.module.version="1.0.0" type="JAVA_MODULE" version="4">
+<module external.linked.project.id=":lwjgl3:test" external.linked.project.path="$MODULE_DIR$/../../../lwjgl3" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.group="atrapadosmaster" external.system.module.type="sourceSet" external.system.module.version="1.0.0" type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager">
     <output-test url="file://$MODULE_DIR$/../../../lwjgl3/build/classes/java/test" />
     <exclude-output />
     <content url="file://$MODULE_DIR$/../../../lwjgl3/src/test" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="atrapados-master.lwjgl3.main" />
+    <orderEntry type="module" module-name="atrapadosmaster.lwjgl3.main" />
     <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx-backend-lwjgl3:1.13.1" level="project" />
     <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx-freetype:1.13.1" level="project" />
-    <orderEntry type="module" module-name="atrapados-master.core.main" />
+    <orderEntry type="module" module-name="atrapadosmaster.core.main" />
     <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx:1.13.1" level="project" />
     <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx-platform:natives-desktop:1.13.1" level="project" />
     <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx-freetype-platform:natives-desktop:1.13.1" level="project" />
@@ -65,5 +65,5 @@
     <orderEntry type="library" name="Gradle: org.jcraft:jorbis:0.0.17" level="project" />
     <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx-jnigen-loader:2.5.2" level="project" />
   </component>
-  <component name="TestModuleProperties" production-module="atrapados-master.lwjgl3.main" />
+  <component name="TestModuleProperties" production-module="atrapadosmaster.lwjgl3.main" />
 </module>
