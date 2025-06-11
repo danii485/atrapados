@@ -7,11 +7,19 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+
 import io.github.some_example_name.Main;
 import io.github.some_example_name.entidades.BolaEnemiga;
 import io.github.some_example_name.entidades.Jugador;
 import io.github.some_example_name.entidades.Jugador2;
+import io.github.some_example_name.screen.MenuScreen;
 
 public class Nivel1Multijugador implements Screen {
     private Main game;
@@ -26,6 +34,10 @@ public class Nivel1Multijugador implements Screen {
     private boolean mostrandoMensaje;
     private boolean juegoPausado;
 
+    private Stage stage;
+    private Skin skin;
+    private TextButton menuButton;
+
     public Nivel1Multijugador(Main game) {
         this.game = game;
     }
@@ -38,9 +50,9 @@ public class Nivel1Multijugador implements Screen {
         anchoPantalla = Gdx.graphics.getWidth();
         altoPantalla = Gdx.graphics.getHeight();
 
-        jugador = new Jugador(anchoPantalla, altoPantalla);    // Control con WASD
-        jugador2 = new Jugador2(anchoPantalla, altoPantalla);  // Control con flechas
-        jugador2.getHitbox().x = 100; // Para que no se superpongan
+        jugador = new Jugador(anchoPantalla, altoPantalla);
+        jugador2 = new Jugador2(anchoPantalla, altoPantalla);
+        jugador2.getHitbox().x = 100;
 
         jugador1Muerto = false;
         jugador2Muerto = false;
@@ -52,6 +64,24 @@ public class Nivel1Multijugador implements Screen {
             bola.setVelocidadExtra(1.25f);
             bolas.add(bola);
         }
+
+        // 🎮 UI Stage y botón
+        stage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(stage);  // ¡Importante!
+
+        skin = new Skin(Gdx.files.internal("uiskin.json"));
+
+        menuButton = new TextButton("Menú", skin);
+        menuButton.setPosition(525, altoPantalla - 70);
+        menuButton.setSize(100, 50);
+        stage.addActor(menuButton);
+
+        menuButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new MenuScreen(game));
+            }
+        });
     }
 
     @Override
@@ -60,7 +90,6 @@ public class Nivel1Multijugador implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         if (!juegoPausado) {
-            // Solo actualiza si no está muerto
             if (!jugador1Muerto) jugador.actualizar(delta);
             if (!jugador2Muerto) jugador2.actualizar(delta);
 
@@ -76,18 +105,19 @@ public class Nivel1Multijugador implements Screen {
                 }
             }
 
-            // Pausar si ambos jugadores murieron
             if (jugador1Muerto && jugador2Muerto) {
                 juegoPausado = true;
             }
 
-            // Verificar si ambos llegaron a la meta
             boolean jugador1EnMeta = !jugador1Muerto &&
-                (jugador.getHitbox().x > anchoPantalla - 40) &&
-                (jugador.getHitbox().y > (altoPantalla / 2) - 50 && jugador.getHitbox().y < (altoPantalla / 2) + 20);
+                jugador.getHitbox().x > anchoPantalla - 40 &&
+                jugador.getHitbox().y > (altoPantalla / 2) - 50 &&
+                jugador.getHitbox().y < (altoPantalla / 2) + 20;
+
             boolean jugador2EnMeta = !jugador2Muerto &&
-                (jugador2.getHitbox().x > anchoPantalla - 40) &&
-                (jugador2.getHitbox().y > (altoPantalla / 2) - 50 && jugador2.getHitbox().y < (altoPantalla / 2) + 20);
+                jugador2.getHitbox().x > anchoPantalla - 40 &&
+                jugador2.getHitbox().y > (altoPantalla / 2) - 50 &&
+                jugador2.getHitbox().y < (altoPantalla / 2) + 20;
 
             if (jugador1EnMeta && jugador2EnMeta) {
                 mostrandoMensaje = true;
@@ -96,38 +126,24 @@ public class Nivel1Multijugador implements Screen {
         }
 
         batch.begin();
-
         batch.draw(fondo, 0, 0, anchoPantalla, altoPantalla);
 
-        for (BolaEnemiga bola : bolas) {
-            bola.renderizar(batch);
-        }
-
+        for (BolaEnemiga bola : bolas) bola.renderizar(batch);
         if (!jugador1Muerto) jugador.renderizar(batch);
         if (!jugador2Muerto) jugador2.renderizar(batch);
 
-        // Mensaje de victoria
         if (mostrandoMensaje) {
             game.getFont().setColor(Color.BLACK);
-            game.getFont().draw(batch,
-                "¡Pasaron al Nivel 2! Presionen ENTER",
-                anchoPantalla / 2 - 100, altoPantalla / 2
-            );
-
+            game.getFont().draw(batch, "¡Pasaron al Nivel 2! Presionen ENTER", anchoPantalla / 2 - 100, altoPantalla / 2);
             if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
                 game.addScore(100);
                 game.setScreen(new Nivel2(game));
             }
         }
 
-        // Mensaje de derrota solo si ambos murieron
         if (jugador1Muerto && jugador2Muerto) {
             game.getFont().setColor(Color.BLACK);
-            game.getFont().draw(batch,
-                "¡Perdieron! Presionen ENTER para reiniciar",
-                anchoPantalla / 2 - 150, altoPantalla / 2 + 25
-            );
-
+            game.getFont().draw(batch, "¡Perdieron! Presionen ENTER para reiniciar", anchoPantalla / 2 - 150, altoPantalla / 2 + 25);
             if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
                 game.addScore(-50);
                 game.setScreen(new Nivel1Multijugador(game));
@@ -135,12 +151,12 @@ public class Nivel1Multijugador implements Screen {
         }
 
         game.getFont().setColor(Color.WHITE);
-        game.getFont().draw(batch,
-            "Score: " + game.getScore(),
-            10, altoPantalla - 10
-        );
-
+        game.getFont().draw(batch, "Score: " + game.getScore(), 10, altoPantalla - 10);
         batch.end();
+
+        // 👇 Dibujar UI
+        stage.act(delta);
+        stage.draw();
     }
 
     @Override
@@ -149,17 +165,15 @@ public class Nivel1Multijugador implements Screen {
         fondo.dispose();
         jugador.dispose();
         jugador2.dispose();
-        for (BolaEnemiga bola : bolas) {
-            bola.dispose();
-        }
+        for (BolaEnemiga bola : bolas) bola.dispose();
+        stage.dispose();
+        skin.dispose();
     }
 
-    @Override
-    public void resize(int width, int height) {}
-    @Override
-    public void pause() {}
-    @Override
-    public void resume() {}
-    @Override
-    public void hide() {}
+    @Override public void resize(int width, int height) {
+        stage.getViewport().update(width, height, true);
+    }
+    @Override public void pause() {}
+    @Override public void resume() {}
+    @Override public void hide() {}
 }
