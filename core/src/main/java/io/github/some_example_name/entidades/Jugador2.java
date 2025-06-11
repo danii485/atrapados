@@ -17,7 +17,7 @@ public class Jugador2 {
     private float prevX, prevY;
 
     public Jugador2(float pantallaAncho, float pantallaAlto) {
-        this.textura = new Texture("messi.png");
+        this.textura = new Texture("cr7.png");
         this.pantallaAncho = pantallaAncho;
         this.pantallaAlto = pantallaAlto;
         this.x = 0;

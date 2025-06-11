@@ -60,26 +60,33 @@ public class Nivel1Multijugador implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         if (!juegoPausado) {
-            jugador.actualizar(delta);
-            jugador2.actualizar(delta);
+            // Solo actualiza si no está muerto
+            if (!jugador1Muerto) jugador.actualizar(delta);
+            if (!jugador2Muerto) jugador2.actualizar(delta);
 
             for (BolaEnemiga bola : bolas) {
                 bola.actualizar(delta);
 
-                if (jugador.getHitbox().overlaps(bola.getHitbox())) {
+                if (!jugador1Muerto && jugador.getHitbox().overlaps(bola.getHitbox())) {
                     jugador1Muerto = true;
-                    juegoPausado = true;
                 }
 
-                if (jugador2.getHitbox().overlaps(bola.getHitbox())) {
+                if (!jugador2Muerto && jugador2.getHitbox().overlaps(bola.getHitbox())) {
                     jugador2Muerto = true;
-                    juegoPausado = true;
                 }
             }
 
-            boolean jugador1EnMeta = (jugador.getHitbox().x > anchoPantalla - 40) &&
+            // Pausar si ambos jugadores murieron
+            if (jugador1Muerto && jugador2Muerto) {
+                juegoPausado = true;
+            }
+
+            // Verificar si ambos llegaron a la meta
+            boolean jugador1EnMeta = !jugador1Muerto &&
+                (jugador.getHitbox().x > anchoPantalla - 40) &&
                 (jugador.getHitbox().y > (altoPantalla / 2) - 50 && jugador.getHitbox().y < (altoPantalla / 2) + 20);
-            boolean jugador2EnMeta = (jugador2.getHitbox().x > anchoPantalla - 40) &&
+            boolean jugador2EnMeta = !jugador2Muerto &&
+                (jugador2.getHitbox().x > anchoPantalla - 40) &&
                 (jugador2.getHitbox().y > (altoPantalla / 2) - 50 && jugador2.getHitbox().y < (altoPantalla / 2) + 20);
 
             if (jugador1EnMeta && jugador2EnMeta) {
@@ -96,9 +103,10 @@ public class Nivel1Multijugador implements Screen {
             bola.renderizar(batch);
         }
 
-        jugador.renderizar(batch);
-        jugador2.renderizar(batch);
+        if (!jugador1Muerto) jugador.renderizar(batch);
+        if (!jugador2Muerto) jugador2.renderizar(batch);
 
+        // Mensaje de victoria
         if (mostrandoMensaje) {
             game.getFont().setColor(Color.BLACK);
             game.getFont().draw(batch,
@@ -107,12 +115,13 @@ public class Nivel1Multijugador implements Screen {
             );
 
             if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-                game.addScore(100); // +100 al pasar de nivel
-                game.setScreen(new Nivel2(game)); // Nivel siguiente
+                game.addScore(100);
+                game.setScreen(new Nivel2(game));
             }
         }
 
-        if (jugador1Muerto || jugador2Muerto) {
+        // Mensaje de derrota solo si ambos murieron
+        if (jugador1Muerto && jugador2Muerto) {
             game.getFont().setColor(Color.BLACK);
             game.getFont().draw(batch,
                 "¡Perdieron! Presionen ENTER para reiniciar",
@@ -120,7 +129,7 @@ public class Nivel1Multijugador implements Screen {
             );
 
             if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-                game.addScore(-50); // −50 al morir
+                game.addScore(-50);
                 game.setScreen(new Nivel1Multijugador(game));
             }
         }
