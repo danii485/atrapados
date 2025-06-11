@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import io.github.some_example_name.Main;
 import io.github.some_example_name.niveles.Nivel1;
+import io.github.some_example_name.niveles.Nivel1Multijugador; // ✅ Import necesario
 
 public class MenuScreen implements Screen {
     private Main game;
@@ -24,7 +25,6 @@ public class MenuScreen implements Screen {
 
     public MenuScreen(Main game) {
         this.game = game;
-
     }
 
     @Override
@@ -40,7 +40,6 @@ public class MenuScreen implements Screen {
         TextButton levelsButton = new TextButton("Levels", skin, "levels");
         TextButton exitButton = new TextButton("Exit", skin, "exit");
 
-
         Table table = new Table();
         table.setFillParent(true);
         stage.addActor(table);
@@ -54,6 +53,7 @@ public class MenuScreen implements Screen {
         table.add(levelsButton).width(buttonWidth).height(buttonHeight).pad(20).row();
         table.add(exitButton).width(buttonWidth).height(buttonHeight).pad(20).row();
 
+        // ✅ Un jugador: Nivel1
         startButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -61,17 +61,18 @@ public class MenuScreen implements Screen {
             }
         });
 
+        // ✅ Dos jugadores: Nivel1Multijugador
         twoPlayersButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Modo 2 jugadores iniciado"); // temporal
+                game.setScreen(new Nivel1Multijugador(game));
             }
         });
 
         levelsButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new Nivel1(game));
+                game.setScreen(new Nivel1(game)); // Aquí también puedes implementar selector de niveles
             }
         });
 
@@ -113,7 +114,3 @@ public class MenuScreen implements Screen {
         batch.dispose();
     }
 }
-
-
-
-
