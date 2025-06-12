@@ -1,43 +1,37 @@
 package io.github.some_example_name;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
-
-import com.badlogic.gdx.graphics.Color;
 import io.github.some_example_name.niveles.Nivel1;
+import io.github.some_example_name.screen.MenuScreen;
 
 public class Main extends Game {
     private BitmapFont font;
+    private int score;                  // <— campo de puntuación
 
     public BitmapFont getFont() {
         return font;
     }
+    public int getScore() {             // <— lee la puntuación actual
+        return score;
+    }
+    public void addScore(int delta) {   // <— suma o resta puntos
+        score += delta;
+    }
+    public void resetScore() {         // <— reinicia para una nueva partida
+        score = 0;
+    }
 
     @Override
     public void create() {
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fuentes/Roboto-Bold.ttf"));
-        FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-        parameter.size = 40; // Aumenta o disminuye el tamaño según lo necesites
-        parameter.color = Color.ORANGE;
-        parameter.borderWidth = 2;
-        parameter.borderColor = Color.BLACK;
-        parameter.shadowOffsetX = 2;
-        parameter.shadowOffsetY = 2;
-        parameter.shadowColor = new Color(0, 0, 0, 0.5f); // sombra sutil
-
-        font = generator.generateFont(parameter); // genera la fuente
-        generator.dispose();
-
-        setScreen(new Nivel1(this)); // o Nivel2 si quieres probar directo
+        font = new BitmapFont();
+        resetScore();                  // <— asegurar que empiece en 0
+        setScreen(new Nivel1(this));
+        setScreen(new MenuScreen(this));
     }
 
     @Override
     public void dispose() {
-        font.dispose();
+        if (font != null) font.dispose();
     }
 }
-
-

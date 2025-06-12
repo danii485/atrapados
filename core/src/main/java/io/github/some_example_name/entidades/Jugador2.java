@@ -6,8 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
-
-public class Jugador {
+public class Jugador2 {
     private Texture textura;
     private float x, y;
     private float velocidad;
@@ -17,8 +16,8 @@ public class Jugador {
     private Rectangle hitbox;
     private float prevX, prevY;
 
-    public Jugador(float pantallaAncho, float pantallaAlto) {
-        this.textura = new Texture("messi.png");
+    public Jugador2(float pantallaAncho, float pantallaAlto) {
+        this.textura = new Texture("cr7.png");
         this.pantallaAncho = pantallaAncho;
         this.pantallaAlto = pantallaAlto;
         this.x = 0;
@@ -28,16 +27,16 @@ public class Jugador {
     }
 
     public void actualizar(float delta) {
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             x -= velocidad * delta;
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             x += velocidad * delta;
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             y += velocidad * delta;
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
             y -= velocidad * delta;
         }
 
