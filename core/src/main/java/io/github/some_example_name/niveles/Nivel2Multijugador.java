@@ -21,7 +21,7 @@ import io.github.some_example_name.entidades.Jugador;
 import io.github.some_example_name.entidades.Jugador2;
 import io.github.some_example_name.screen.MenuScreen;
 
-public class Nivel1Multijugador implements Screen {
+public class Nivel2Multijugador implements Screen {
     private Main game;
     private SpriteBatch batch;
     private Texture fondo;
@@ -38,7 +38,7 @@ public class Nivel1Multijugador implements Screen {
     private Skin skin;
     private TextButton menuButton;
 
-    public Nivel1Multijugador(Main game) {
+    public Nivel2Multijugador(Main game) {
         this.game = game;
     }
 
@@ -59,15 +59,14 @@ public class Nivel1Multijugador implements Screen {
         mostrandoMensaje = false;
 
         bolas = new Array<>();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 6; i++) {  // AUMENTA LA DIFICULTAD: 6 bolas
             BolaEnemiga bola = new BolaEnemiga(anchoPantalla, altoPantalla);
-            bola.setVelocidadExtra(1.25f);
+            bola.setVelocidadExtra(1.5f);  // Opcional: más rápido que en Nivel 1
             bolas.add(bola);
         }
 
-        // 🎮 UI Stage y botón
         stage = new Stage(new ScreenViewport());
-        Gdx.input.setInputProcessor(stage);  // ¡Importante!
+        Gdx.input.setInputProcessor(stage);
 
         skin = new Skin(Gdx.files.internal("uiskin.json"));
 
@@ -134,10 +133,12 @@ public class Nivel1Multijugador implements Screen {
 
         if (mostrandoMensaje) {
             game.getFont().setColor(Color.BLACK);
-            game.getFont().draw(batch, "¡Pasaron al Nivel 2! Presionen ENTER", anchoPantalla / 2 - 100, altoPantalla / 2);
+            game.getFont().draw(batch, "¡Ganaron el Nivel 2! Presionen ENTER", anchoPantalla / 2 - 100, altoPantalla / 2);
             if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-                game.addScore(100);
-                game.setScreen(new Nivel2(game));
+                game.addScore(200);
+                // Aquí puedes llevarlos a un siguiente nivel si existe:
+                // game.setScreen(new Nivel3Multijugador(game));
+                game.setScreen(new MenuScreen(game));  // Por ahora vuelve al menú
             }
         }
 
@@ -145,8 +146,8 @@ public class Nivel1Multijugador implements Screen {
             game.getFont().setColor(Color.BLACK);
             game.getFont().draw(batch, "¡Perdieron! Presionen ENTER para reiniciar", anchoPantalla / 2 - 150, altoPantalla / 2 + 25);
             if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-                game.addScore(-50);
-                game.setScreen(new Nivel1Multijugador(game));
+                game.addScore(-75);
+                game.setScreen(new Nivel2Multijugador(game));
             }
         }
 
@@ -154,7 +155,6 @@ public class Nivel1Multijugador implements Screen {
         game.getFont().draw(batch, "Score: " + game.getScore(), 10, altoPantalla - 10);
         batch.end();
 
-        // 👇 Dibujar UI
         stage.act(delta);
         stage.draw();
     }
@@ -177,3 +177,4 @@ public class Nivel1Multijugador implements Screen {
     @Override public void resume() {}
     @Override public void hide() {}
 }
+

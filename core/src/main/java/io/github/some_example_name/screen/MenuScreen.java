@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import io.github.some_example_name.Main;
 import io.github.some_example_name.niveles.Nivel1;
-import io.github.some_example_name.niveles.Nivel1Multijugador; // ✅ Import necesario
+import io.github.some_example_name.niveles.Nivel1Multijugador;
 
 public class MenuScreen implements Screen {
     private Main game;
@@ -72,7 +72,7 @@ public class MenuScreen implements Screen {
         levelsButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new Nivel1(game)); // Aquí también puedes implementar selector de niveles
+                game.setScreen(new Nivel1(game));
             }
         });
 
